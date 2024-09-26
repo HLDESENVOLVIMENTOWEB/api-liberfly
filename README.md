@@ -106,4 +106,4 @@ Este projeto está sob a licença [MIT](https://opensource.org/licenses/MIT).
 
 ---
 
-Desenvolvido com ❤️ por [Seu Nome/Equipe]
+Desenvolvido com ❤️ por Hyuri Miranda Cortes
