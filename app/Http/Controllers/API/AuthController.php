@@ -9,6 +9,9 @@ use App\Services\UserService;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Database\QueryException;
 
+/**
+ * @OA\Info(title="API de Autenticação", version="1.0")
+ */
 class AuthController extends Controller
 {
     use ValidatesRequests;
@@ -20,17 +23,47 @@ class AuthController extends Controller
         $this->userService = $userService;
     }
 
+    /**
+     * @OA\Post(
+     *     path="/api/login",
+     *     summary="Login do usuário",
+     *     @OA\RequestBody(
+     *         @OA\JsonContent(
+     *             @OA\Property(property="email", type="string"),
+     *             @OA\Property(property="password", type="string")
+     *         )
+     *     ),
+     *     @OA\Response(response="200", description="Login bem-sucedido"),
+     *     @OA\Response(response="401", description="Credenciais inválidas")
+     * )
+     */
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
 
         if (!$token = JWTAuth::attempt($credentials)) {
-            return response()->json(['error' => 'Invalid credentials'], 401);
+            return response()->json(['error' => 'Credenciais inválidas'], 401);
         }
 
         return response()->json(compact('token'));
     }
 
+    /**
+     * @OA\Post(
+     *     path="/api/register",
+     *     summary="Registro de usuário",
+     *     @OA\RequestBody(
+     *         @OA\JsonContent(
+     *             @OA\Property(property="name", type="string"),
+     *             @OA\Property(property="email", type="string"),
+     *             @OA\Property(property="password", type="string")
+     *         )
+     *     ),
+     *     @OA\Response(response="201", description="Usuário registrado com sucesso"),
+     *     @OA\Response(response="400", description="Requisição inválida ou e-mail já existe"),
+     *     @OA\Response(response="500", description="Falha no registro")
+     * )
+     */
     public function register(Request $request)
     {
         $this->validate($request, [
@@ -41,16 +74,16 @@ class AuthController extends Controller
 
         try {
             if ($this->userService->getUserByEmail($request['email'])) {
-                throw new \Exception('Email already exists');
+                throw new \Exception('E-mail já existe');
             }
             $user = $this->userService->createUser($request->all());
             $token = JWTAuth::fromUser($user);
             return response()->json(compact('user', 'token'), 201);
         } catch (QueryException $e) {
             if ($e->errorInfo[1] == 1062) {
-                return response()->json(['error' => 'Email already exists'], 400);
+                return response()->json(['error' => 'E-mail já existe'], 400);
             }
-            return response()->json(['error' => 'Registration failed'], 500);
+            return response()->json(['error' => 'Falha no registro'], 500);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 400);
         }
