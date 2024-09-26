@@ -1,66 +1,109 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# API de Autenticação Laravel
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## 📌 Sobre o Projeto
 
-## About Laravel
+Este projeto é uma API de autenticação robusta construída com Laravel, oferecendo funcionalidades de registro de usuário, login e gerenciamento de usuários. A API utiliza autenticação JWT (JSON Web Token) para garantir a segurança das operações.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🚀 Tecnologias Utilizadas
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- [Laravel 10.x](https://laravel.com/)
+- [PHP 8.1+](https://www.php.net/)
+- [MySQL](https://www.mysql.com/)
+- [JWT (JSON Web Tokens)](https://jwt.io/)
+- [Swagger/OpenAPI](https://swagger.io/) para documentação da API
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 🛠 Configuração do Projeto
 
-## Learning Laravel
+### Pré-requisitos
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- PHP 8.1 ou superior
+- Composer
+- MySQL
+- Node.js e NPM (para compilação de assets, se necessário)
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Passos para Configuração
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+1. Clone o repositório:
+   ```
+   git clone https://seu-repositorio.git
+   cd nome-do-projeto
+   ```
 
-## Laravel Sponsors
+2. Instale as dependências do PHP:
+   ```
+   composer install
+   ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+3. Copie o arquivo `.env.example` para `.env` e configure suas variáveis de ambiente:
+   ```
+   cp .env.example .env
+   ```
 
-### Premium Partners
+4. Gere a chave da aplicação:
+   ```
+   php artisan key:generate
+   ```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+5. Configure o banco de dados no arquivo `.env`:
+   ```
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=api-liberfly
+   DB_USERNAME=root
+   DB_PASSWORD=
+   ```
 
-## Contributing
+6. Configure a chave JWT no arquivo `.env`:
+   ```
+   JWT_SECRET=your_secret_key
+   ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+7. Execute as migrações do banco de dados:
+   ```
+   php artisan migrate
+   ```
 
-## Code of Conduct
+## 🏃‍♂️ Rodando o Projeto
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+1. Inicie o servidor de desenvolvimento:
+   ```
+   php artisan serve
+   ```
 
-## Security Vulnerabilities
+2. O projeto estará disponível em `http://localhost:8000`
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## 📚 Documentação da API (Swagger)
 
-## License
+A documentação da API está disponível via Swagger UI. Para acessá-la:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+1. Certifique-se de que o servidor está rodando
+2. Acesse `http://localhost:8000/api/docs` em seu navegador
+
+Para garantir que a documentação Swagger esteja sempre atualizada, configure as seguintes variáveis no seu arquivo `.env`:
+
+```
+L5_SWAGGER_GENERATE_ALWAYS=true
+L5_SWAGGER_UI_DOC_EXPANSION=list
+L5_SWAGGER_CONST_HOST=http://localhost:8000
+```
+
+## 🔐 Rotas Protegidas
+
+Todas as rotas, exceto `login` e `register`, são protegidas e requerem um token JWT válido. Para acessar essas rotas, inclua o token no cabeçalho da requisição:
+
+```
+Authorization: Bearer {seu_token_jwt}
+```
+
+## 🤝 Contribuindo
+
+Contribuições são sempre bem-vindas! Sinta-se à vontade para abrir uma issue ou enviar um pull request.
+
+## 📝 Licença
+
+Este projeto está sob a licença [MIT](https://opensource.org/licenses/MIT).
+
+---
+
+Desenvolvido com ❤️ por [Seu Nome/Equipe]
